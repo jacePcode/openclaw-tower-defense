@@ -853,13 +853,13 @@
 
             const wave = gameState.wave;
             const enemyCount = 3 + wave * 2;
-            const types = Object.values(ENEMY_TYPE);
+            const enemyTypeKeys = Object.keys(ENEMY_TYPES);
             let spawnDelay = 0;
 
             for (let i = 0; i < enemyCount; i++) {
                 setTimeout(() => {
                     if (gameState.waveInProgress && !gameState.gameOver) {
-                        const randomType = ENEMY_TYPES[Object.keys(ENEMY_TYPES)[Math.floor(Math.random() * 4)]];
+                        const randomType = ENEMY_TYPES[enemyTypeKeys[Math.floor(Math.random() * enemyTypeKeys.length)]];
                         gameState.enemies.push(new Enemy(randomType));
                     }
                 }, spawnDelay);
