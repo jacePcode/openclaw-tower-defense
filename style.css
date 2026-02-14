@@ -1,0 +1,577 @@
+/* Tower Defense Game Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --success-color: #2ecc71;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --board-bg: #34495e;
+    --path-color: #7f8c8d;
+    --tower-color: #9b59b6;
+    --enemy-color: #e74c3c;
+    --base-color: #1abc9c;
+    --grid-cell-size: 40px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: var(--light-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    width: 100%;
+    background: rgba(25, 25, 35, 0.9);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.header .subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Game Stats */
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(44, 62, 80, 0.7);
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.stat-box {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 15px;
+    border-radius: 50px;
+}
+
+.stat i {
+    font-size: 1.3rem;
+    color: var(--warning-color);
+}
+
+.stat:nth-child(2) i {
+    color: var(--danger-color);
+}
+
+.stat:nth-child(3) i {
+    color: var(--secondary-color);
+}
+
+.stat:nth-child(4) i {
+    color: var(--accent-color);
+}
+
+.stat:nth-child(5) i {
+    color: var(--success-color);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-start {
+    background: var(--success-color);
+    color: white;
+}
+
+.btn-pause {
+    background: var(--warning-color);
+    color: white;
+}
+
+.btn-restart {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-upgrade {
+    background: var(--tower-color);
+    color: white;
+}
+
+.btn-upgrade:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Game Area */
+.game-area {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Game Board */
+.game-board-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-board {
+    position: relative;
+    background: var(--board-bg);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    min-height: 500px;
+    display: grid;
+    grid-template-columns: repeat(12, var(--grid-cell-size));
+    grid-template-rows: repeat(10, var(--grid-cell-size));
+    gap: 2px;
+    justify-content: center;
+    align-content: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.grid-cell {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: var(--transition);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.grid-cell.path {
+    background: var(--path-color);
+    opacity: 0.7;
+}
+
+.grid-cell.tower {
+    background: var(--tower-color);
+    opacity: 0.9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-cell.tower i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.grid-cell.enemy {
+    background: var(--enemy-color);
+    border-radius: 50%;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.path {
+    position: absolute;
+    background: var(--path-color);
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.base {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: var(--base-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(26, 188, 156, 0.7);
+}
+
+.base i {
+    font-size: 2rem;
+    color: white;
+}
+
+.game-info {
+    background: rgba(44, 62, 80, 0.7);
+    padding: 20px;
+    border-radius: var(--border-radius);
+}
+
+.game-info h3 {
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.game-info p {
+    margin-bottom: 10px;
+}
+
+.instructions {
+    margin-top: 15px;
+}
+
+.instructions h4 {
+    margin-bottom: 8px;
+    color: var(--warning-color);
+}
+
+.instructions ul {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 5px;
+}
+
+kbd {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Tower Sidebar */
+.tower-sidebar {
+    background: rgba(44, 62, 80, 0.7);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tower-sidebar h3 {
+    color: var(--tower-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tower-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.tower-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tower-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--tower-color);
+    transform: translateX(5px);
+}
+
+.tower-item.selected {
+    border-color: var(--tower-color);
+    background: rgba(155, 89, 182, 0.2);
+}
+
+.tower-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--tower-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: white;
+}
+
+.tower-details h4 {
+    margin-bottom: 5px;
+    color: white;
+}
+
+.tower-details p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.cost {
+    color: var(--warning-color);
+    font-weight: bold;
+}
+
+.selected-tower-info {
+    background: rgba(44, 62, 80, 0.9);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--tower-color);
+}
+
+.selected-tower-info h3 {
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#selected-tower-display {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-selection {
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.enemy-info {
+    background: rgba(44, 62, 80, 0.9);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--enemy-color);
+}
+
+.enemy-info h3 {
+    color: var(--enemy-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.enemy-preview {
+    display: flex;
+    justify-content: space-around;
+}
+
+.enemy-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.enemy-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.basic-enemy {
+    background: var(--enemy-color);
+}
+
+.fast-enemy {
+    background: var(--warning-color);
+}
+
+.tank-enemy {
+    background: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+}
+
+.footer p {
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.footer-links a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    margin: 0 10px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--success-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1100px) {
+    .game-area {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-board {
+        grid-template-columns: repeat(10, var(--grid-cell-size));
+        grid-template-rows: repeat(8, var(--grid-cell-size));
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-stats {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .stat-box {
+        justify-content: center;
+    }
+    
+    .controls {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .game-board {
+        grid-template-columns: repeat(8, var(--grid-cell-size));
+        grid-template-rows: repeat(6, var(--grid-cell-size));
+        min-height: 300px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Tower and enemy visual styles for reference */
+.tower-visual, .enemy-visual {
+    width: var(--grid-cell-size);
+    height: var(--grid-cell-size);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+.tower-visual.basic-tower {
+    background: var(--tower-color);
+}
+
+.tower-visual.sniper-tower {
+    background: #3498db;
+}
+
+.tower-visual.cannon-tower {
+    background: #e74c3c;
+}
+
+.tower-visual.slow-tower {
+    background: #1abc9c;
+}
+
+.enemy-visual.basic-enemy {
+    background: var(--enemy-color);
+}
+
+.enemy-visual.fast-enemy {
+    background: var(--warning-color);
+}
+
+.enemy-visual.tank-enemy {
+    background: var(--primary-color);
+}
